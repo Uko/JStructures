@@ -15,11 +15,19 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 {
 	private Character paragraph;
 	private int size;
+	/**
+	 * A basic constructor, that makes empty string
+	 */
 	public String()
 	{
 		paragraph = null;
 		size = 0;
 	}
+	/**
+	 * A constructor that creates a string of a requested size, and fills it with passed character
+	 * @param size A size of a new string
+	 * @param param character to fill string with
+	 */
 	public String(int size, char param)
 	{
 		this.size = size;
@@ -28,11 +36,19 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			paragraph = new Character(param, paragraph);
 		}
 	}
+	/**
+	 * A constructor of the same type object.
+	 * @param param String to construct from
+	 */
 	public String(String param)
 	{
 		size = param.size;
 		paragraph = param.paragraph;
 	}
+	/**
+	 * A constructor from the common String.
+	 * @param param String to construct from
+	 */
 	public String(java.lang.String param)
 	{
 		size = param.length();
@@ -48,6 +64,10 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			folover = folover.next;
 		}
 	}
+	/**
+	 * A constructor from the char array.
+	 * @param param char array to construct from
+	 */
 	public String(char[] param)
 	{
 		size = param.length;
@@ -93,7 +113,7 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		Iterator<java.lang.Character> comparable1 = iterator();
 		for (java.lang.Character comparable2 : param)
 		{
-			if (comparable1.next() != comparable2)
+			if (!comparable1.next().equals(comparable2))
 			{
 				return false;
 			}
@@ -108,10 +128,6 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 	@Override
 	public void replaceFirst(String insteadOf, String what) throws IllegalAccessException
 	{
-		if (what.isEmpty())
-		{
-			return;
-		}
 		if (insteadOf.isEmpty())
 		{
 			throw new IllegalAccessException("Replacing an empty string");
@@ -132,14 +148,24 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			startpoint = startpoint.next;
 		}
 		Character endpoint = what.paragraph;
-		while (endpoint.next != null)
+		if (!what.isEmpty())
 		{
-			endpoint = endpoint.next;
+			while (endpoint.next != null)
+			{
+				endpoint = endpoint.next;
+			}
 		}
 		if (atBegin)
 		{
-			endpoint.next = startpoint.next;
-			paragraph = what.paragraph;
+			if (what.isEmpty())
+			{
+				paragraph = startpoint;
+			}
+			else
+			{
+				endpoint.next = startpoint;
+				paragraph = what.paragraph;
+			}
 			size += what.size - insteadOf.size;
 			return;
 		}
@@ -162,12 +188,19 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 				}
 				if (contains)
 				{
-					endpoint.next = runner;
-					cutBegin.next = what.paragraph;
+					if (what.isEmpty())
+					{
+						cutBegin.next = runner;
+					}
+					else
+					{
+						endpoint.next = runner;
+						cutBegin.next = what.paragraph;
+					}
 					size += what.size - insteadOf.size;
 					return;
 				}
-				
+
 			}
 		}
 		throw new IllegalAccessException("No such substring");
@@ -214,7 +247,7 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			throw new IllegalAccessException("Searched string is biger than an original one");
 		}
 		int index = 0;
-		for (Character i = paragraph; i.next != null; i = i.next)
+		for (Character i = paragraph; i != null; i = i.next)
 		{
 			if (i.value == param.paragraph.value)
 			{
@@ -259,7 +292,7 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		{
 			return false;
 		}
-		for (Character i = paragraph; i.next != null; i = i.next)
+		for (Character i = paragraph; i != null; i = i.next)
 		{
 			if (i.value == param.paragraph.value)
 			{

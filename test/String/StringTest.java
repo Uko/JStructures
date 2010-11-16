@@ -29,7 +29,6 @@ public class StringTest {
 		instance = instance.concat(new String("bum-bum"));
 		assertEquals(14, instance.size());
 
-		System.out.println(instance.toString());
 		instance.replaceFirst(new String("tabum"), new String("-bum"));
 		assertEquals(13, instance.size());
 
@@ -108,6 +107,41 @@ public class StringTest {
 		instance.replaceFirst(new String("tabum"), new String("-bum"));
 		assertEquals("trata-bum-bum", instance.toString());
 	}
+	/**
+	 * Test of replaceFirst method, of class String.
+	 */
+	@Test
+	public void testReplaceFirst1() throws IllegalAccessException
+	{
+		String instance = new String("1212");
+		instance.replaceFirst(new String("1"), new String("2"));
+		assertEquals("2212", instance.toString());
+
+		instance = new String("1234");
+		instance.replaceFirst(new String("4"), new String("5"));
+		assertEquals("1235", instance.toString());
+
+		instance = new String("1134");
+		instance.replaceFirst(new String("1"), new String("2"));
+		assertEquals("2134", instance.toString());
+
+		instance = new String("1224");
+		instance.replaceFirst(new String("2"), new String("3"));
+		assertEquals("1324", instance.toString());
+
+		instance = new String("1234");
+		instance.replaceFirst(new String("23"), new String("323"));
+		assertEquals("13234", instance.toString());
+
+		instance = new String("1234");
+		instance.replaceFirst(new String("23"), new String("3"));
+		assertEquals("134", instance.toString());
+
+		instance = new String("1234");
+		instance.replaceFirst(new String("4"), new String(""));
+		assertEquals("123", instance.toString());
+
+	}
 	@Test(expected = NullPointerException.class)
 	public void testReplaceFirstCrash() throws IllegalAccessException
 	{
@@ -135,11 +169,11 @@ public class StringTest {
 	public void testEquals()
 	{
 		String instance = new String();
-		//assertEquals(new String(), instance);
+		assertTrue(instance.equals(new String()));
 
 		java.lang.String testString = "tratatabum-bum";
 		instance = new String("tratatabum-bum");
-		assertEquals(new String(testString), instance);
+		assertTrue(instance.equals(new String(testString)));
 	}
 	/**
 	 * Test of contains method, of class String.
@@ -148,6 +182,10 @@ public class StringTest {
 	public void testContains()
 	{
 		String instance = new String();
+
+		instance = new String("12345");
+		assertTrue(instance.contains(new String("5")));
+
 		instance = new String("tratata");
 		assertTrue(instance.contains(new String("tratata")));
 		assertTrue(instance.contains(new String("tra")));
