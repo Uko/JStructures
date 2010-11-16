@@ -40,14 +40,14 @@ public class MarkovTest {
 	public void testProcessMarkovString() throws IllegalAccessException
 	{
 		Markov instance = new Markov();
-		instance.addProduction("|0", "0||");
-		instance.addProduction("1", "0|");
+		instance.addProduction("a0", "0aa");
+		instance.addProduction("1", "0a");
 		instance.addProduction("0", "");
 		instance.setworkString("101");
 		for (int i = 0; i < 100500; i++)
 		{
 			String result = instance.ProcessMarkovString();
-			assertTrue(result.equals(new String("|||||")));
+			assertTrue(result.equals(new String("aaaaa")));
 		}
 	}
 

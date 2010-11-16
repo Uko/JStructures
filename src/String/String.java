@@ -83,6 +83,11 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			folover = folover.next;
 		}
 	}
+	/**
+	 * Concatination. Returns a string that is a sum of a local string and a parameter
+	 * @param param string to add
+	 * @return sum (concatination) of 2 strings.
+	 */
 	@Override
 	public String concat(String param)
 	{
@@ -103,6 +108,11 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		runner.next = param.paragraph;
 		return temp;
 	}
+	/**
+	 * Checks difference between local string and a parameter
+	 * @param param string to check equalituy with
+	 * @return true if equal, false if not
+	 */
 	@Override
 	public boolean equals(String param)
 	{
@@ -120,11 +130,21 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		}
 		return true;
 	}
+	/**
+	 * Returns a size of a string
+	 * @return amount of elements
+	 */
 	@Override
 	public int size()
 	{
 		return size;
 	}
+	/**
+	 * Replaces substring with the other one
+	 * @param insteadOf substring to replace
+	 * @param what substring to insert
+	 * @throws IllegalAccessException  exception is thrown if there is no match for a substring.
+	 */
 	@Override
 	public void replaceFirst(String insteadOf, String what) throws IllegalAccessException
 	{
@@ -205,10 +225,16 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		}
 		throw new IllegalAccessException("No such substring");
 	}
+	/**
+	 * Inserts substring onto specified position
+	 * @param on on what index to insert the beginning of a substring
+	 * @param param substring to insert
+	 * @throws IllegalAccessException exception is thrown if there is index overflow
+	 */
 	@Override
-	public void insert(int after, String param) throws IllegalAccessException
+	public void insert(int on, String param) throws IllegalAccessException
 	{
-		if (after > size)
+		if (on > size)
 		{
 			throw new IllegalAccessException("Requested notexisting index");
 		}
@@ -217,7 +243,7 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			return;
 		}
 		size += param.size;
-		if (after == 0)
+		if (on == 0)
 		{
 			paragraph = param.paragraph;
 			return;
@@ -228,13 +254,19 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			endpoint = endpoint.next;
 		}
 		Character startpoint = param.paragraph;
-		for (int i = 1; i < after; i++)
+		for (int i = 1; i < on; i++)
 		{
 			startpoint = startpoint.next;
 		}
 		endpoint = startpoint.next;
 		startpoint.next = param.paragraph;
 	}
+	/**
+	 * Gets an index of the beginning of the specified substring
+	 * @param param substring to find
+	 * @return index
+	 * @throws IllegalAccessException exception is thrown if there is no match for a substring.
+	 */
 	@Override
 	public int indexOf(String param) throws IllegalAccessException
 	{
@@ -271,6 +303,12 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		}
 		throw new IllegalAccessException("No such substring");
 	}
+	/**
+	 * Gets an index of the specified character
+	 * @param param character to find
+	 * @return index
+	 * @throws IllegalAccessException exception is thrown if there is no match for a character.
+	 */
 	@Override
 	public int indexOf(char param) throws IllegalAccessException
 	{
@@ -285,6 +323,11 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		}
 		throw new IllegalAccessException("No such character");
 	}
+	/**
+	 * checks if string contains passed substring
+	 * @param param substring to find
+	 * @return true if passed string is a substring, false if not
+	 */
 	@Override
 	public boolean contains(String param)
 	{
@@ -316,6 +359,10 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		}
 		return false;
 	}
+	/**
+	 * Returns a good old lib string
+	 * @return string
+	 */
 	@Override
 	public java.lang.String toString()
 	{
@@ -326,11 +373,19 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		}
 		return temp;
 	}
+	/**
+	 * returns iterator
+	 * @return iterator over string
+	 */
 	@Override
 	public Iterator<java.lang.Character> iterator()
 	{
 		return new StringIterator();
 	}
+	/**
+	 * returns an exact string
+	 * @return copy of a string
+	 */
 	@Override
 	public String clone()
 	{
@@ -350,6 +405,10 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		}
 		return temp;
 	}
+	/**
+	 * Checks if the string is empty
+	 * @return true if the string is empty, false if not
+	 */
 	@Override
 	public boolean isEmpty()
 	{
