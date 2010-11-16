@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package String;
 
 import java.util.Iterator;
@@ -18,83 +17,83 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 	private int size;
 	public String()
 	{
-		paragraph=null;
-		size=0;
+		paragraph = null;
+		size = 0;
 	}
 	public String(int size, char param)
 	{
-		this.size=size;
-		for(int i=0; i<size; i++)
+		this.size = size;
+		for (int i = 0; i < size; i++)
 		{
-			paragraph=new Character(param, paragraph);
+			paragraph = new Character(param, paragraph);
 		}
 	}
 	public String(String param)
 	{
-		size=param.size;
-		paragraph=param.paragraph;
+		size = param.size;
+		paragraph = param.paragraph;
 	}
 	public String(java.lang.String param)
 	{
-		size=param.length();
-		if (size==0)
+		size = param.length();
+		if (size == 0)
 		{
 			return;
 		}
-		paragraph=new Character(param.charAt(0));
+		paragraph = new Character(param.charAt(0));
 		Character folover = paragraph;
-		for(int i=1;i<size;i++)
+		for (int i = 1; i < size; i++)
 		{
-			folover.next=new Character(param.charAt(i));
-			folover=folover.next;
+			folover.next = new Character(param.charAt(i));
+			folover = folover.next;
 		}
 	}
 	public String(char[] param)
 	{
-		size=param.length;
-		if (size==0)
+		size = param.length;
+		if (size == 0)
 		{
 			return;
 		}
-		paragraph=new Character(param[0]);
+		paragraph = new Character(param[0]);
 		Character folover = paragraph;
-		for(int i=1;i<size;i++)
+		for (int i = 1; i < size; i++)
 		{
-			folover.next=new Character(param[i]);
-			folover=folover.next;
+			folover.next = new Character(param[i]);
+			folover = folover.next;
 		}
 	}
 	@Override
 	public String concat(String param)
 	{
-		if (size==0)
+		if (size == 0)
 		{
 			String temp = new String();
-			temp.size=param.size();
-			temp.paragraph=param.paragraph;
+			temp.size = param.size();
+			temp.paragraph = param.paragraph;
 			return temp;
 		}
 		String temp = new String(this);
-		temp.size+=param.size;
+		temp.size += param.size;
 		Character runner = temp.paragraph;
-		while(runner.next!=null)
+		while (runner.next != null)
 		{
-			runner=runner.next;
+			runner = runner.next;
 		}
-		runner.next=param.paragraph;
+		runner.next = param.paragraph;
 		return temp;
 	}
 	@Override
 	public boolean equals(String param)
 	{
-		if(size!=param.size)
+		if (size != param.size)
 		{
 			return false;
 		}
 		Iterator<java.lang.Character> comparable1 = iterator();
-		for(java.lang.Character comparable2: param)
+		for (java.lang.Character comparable2 : param)
 		{
-			if(comparable1.next()!=comparable2)
+			if (comparable1.next() != comparable2)
 			{
 				return false;
 			}
@@ -109,63 +108,66 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 	@Override
 	public void replaceFirst(String insteadOf, String what) throws IllegalAccessException
 	{
-		if(what.isEmpty())
+		if (what.isEmpty())
 		{
 			return;
 		}
-		if(insteadOf.isEmpty())
+		if (insteadOf.isEmpty())
 		{
 			throw new IllegalAccessException("Replacing an empty string");
 		}
-		if(size<insteadOf.size)
+		if (size < insteadOf.size)
 		{
 			throw new IllegalAccessException("Searched string is biger than an original one");
 		}
-		boolean atBegin=true;
+		boolean atBegin = true;
 		Character startpoint = paragraph;
-		for(java.lang.Character i:insteadOf)
+		for (java.lang.Character i : insteadOf)
 		{
-			if(i!=startpoint.value)
+			if (i != startpoint.value)
 			{
-				atBegin=false;
+				atBegin = false;
 				break;
 			}
-			startpoint=startpoint.next;
+			startpoint = startpoint.next;
 		}
 		Character endpoint = what.paragraph;
-		while(endpoint.next!=null)
+		while (endpoint.next != null)
 		{
-			endpoint=endpoint.next;
+			endpoint = endpoint.next;
 		}
-		if(atBegin)
+		if (atBegin)
 		{
-			endpoint.next=startpoint.next;
-			paragraph=what.paragraph;
-			size+=what.size-insteadOf.size;
+			endpoint.next = startpoint.next;
+			paragraph = what.paragraph;
+			size += what.size - insteadOf.size;
 			return;
 		}
-		Character cutBegin=null;
-		Iterator<java.lang.Character> comparator=insteadOf.iterator();
-		for(Character i=paragraph;i.next!=null;i=i.next)
+		Character cutBegin = null;
+		Iterator<java.lang.Character> comparator = insteadOf.iterator();
+		for (Character i = paragraph; i.next != null; i = i.next)
 		{
-			if(comparator.next()!=i.next.value)
+			if (comparator.next() != i.next.value)
 			{
 				comparator = insteadOf.iterator();
 				cutBegin = null;
 			}
-			else if(comparator.hasNext())
-			{
-				if(cutBegin==null)
-				{
-					cutBegin=i;
-				}
-			}
 			else
 			{
-				endpoint.next=i.next.next;
-				cutBegin.next=what.paragraph;
-				size+=what.size-insteadOf.size;
-				return;
+				if (comparator.hasNext())
+				{
+					if (cutBegin == null)
+					{
+						cutBegin = i;
+					}
+				}
+				else
+				{
+					endpoint.next = i.next.next;
+					cutBegin.next = what.paragraph;
+					size += what.size - insteadOf.size;
+					return;
+				}
 			}
 		}
 		throw new IllegalAccessException("No such substring");
@@ -173,56 +175,59 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 	@Override
 	public void insert(int after, String param) throws IllegalAccessException
 	{
-		if(after>size)
+		if (after > size)
 		{
 			throw new IllegalAccessException("Requested notexisting index");
 		}
-		if(param.isEmpty())
+		if (param.isEmpty())
 		{
 			return;
 		}
-		size+=param.size;
-		if(after==0)
+		size += param.size;
+		if (after == 0)
 		{
-			paragraph=param.paragraph;
+			paragraph = param.paragraph;
 			return;
 		}
 		Character endpoint = param.paragraph;
-		while(endpoint.next!=null)
+		while (endpoint.next != null)
 		{
-			endpoint=endpoint.next;
+			endpoint = endpoint.next;
 		}
 		Character startpoint = param.paragraph;
-		for(int i=1;i<after;i++)
+		for (int i = 1; i < after; i++)
 		{
-			startpoint=startpoint.next;
+			startpoint = startpoint.next;
 		}
-		endpoint=startpoint.next;
-		startpoint.next=param.paragraph;
+		endpoint = startpoint.next;
+		startpoint.next = param.paragraph;
 	}
 	@Override
 	public int indexOf(String param) throws IllegalAccessException
 	{
-		if(param.isEmpty())
+		if (param.isEmpty())
 		{
 			throw new IllegalAccessException("Searching for an empty string");
 		}
-		if(size<param.size)
+		if (size < param.size)
 		{
 			throw new IllegalAccessException("Searched string is biger than an original one");
 		}
-		int index=0;
+		int index = 0;
 		Iterator<java.lang.Character> comparable1 = param.iterator();
-		for(char comparable2:this)
+		for (char comparable2 : this)
 		{
 			index++;
-			if(comparable1.next()!=comparable2)
+			if (comparable1.next() != comparable2)
 			{
 				comparable1 = param.iterator();
 			}
-			else if(!comparable1.hasNext())
+			else
 			{
-				return index;
+				if (!comparable1.hasNext())
+				{
+					return index;
+				}
 			}
 		}
 		throw new IllegalAccessException("No such substring");
@@ -230,11 +235,11 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 	@Override
 	public int indexOf(char param) throws IllegalAccessException
 	{
-		int index=0;
-		for(char comparable:this)
+		int index = 0;
+		for (char comparable : this)
 		{
 			index++;
-			if(param==comparable)
+			if (param == comparable)
 			{
 				return index;
 			}
@@ -244,21 +249,31 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 	@Override
 	public boolean contains(String param)
 	{
-		if(param.isEmpty())
+		if (param.isEmpty())
 		{
 			return false;
 		}
-		Iterator<java.lang.Character> comparable1 = param.iterator();
-		for(char comparable2:this)
+		for (Character i = paragraph; i.next != null; i = i.next)
 		{
-			if(comparable1.next()!=comparable2)
+			if (i.value == param.paragraph.value)
 			{
-				comparable1 = param.iterator();
+				boolean contains = true;
+				Character runner = i;
+				for (char comparator : param)
+				{
+					if (runner == null || runner.value != comparator)
+					{
+						contains = false;
+						break;
+					}
+					runner = runner.next;
+				}
+				if (contains)
+				{
+					return true;
+				}
 			}
-			else if(!comparable1.hasNext())
-			{
-				return true;
-			}
+
 		}
 		return false;
 	}
@@ -266,9 +281,9 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 	public java.lang.String toString()
 	{
 		java.lang.String temp = new java.lang.String();
-		for(char runner:this)
+		for (char runner : this)
 		{
-			temp+=runner;
+			temp += runner;
 		}
 		return temp;
 	}
@@ -281,40 +296,39 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 	public String clone()
 	{
 		String temp = new String();
-		temp.size=size;
-		if (size==0)
+		temp.size = size;
+		if (size == 0)
 		{
 			return temp;
 		}
 		Iterator<java.lang.Character> runner = iterator();
-		temp.paragraph=new Character(runner.next());
+		temp.paragraph = new Character(runner.next());
 		Character folover = temp.paragraph;
-		while(runner.hasNext())
+		while (runner.hasNext())
 		{
-			folover.next=new Character(runner.next());
-			folover=folover.next;
+			folover.next = new Character(runner.next());
+			folover = folover.next;
 		}
 		return temp;
 	}
 	@Override
 	public boolean isEmpty()
 	{
-		return paragraph==null;
+		return paragraph == null;
 	}
+
 	private class StringIterator implements Iterator<java.lang.Character>
 	{
 		private Character runner;
 		private boolean canNext = false;
-
 		public StringIterator()
 		{
-			runner=paragraph;
+			runner = paragraph;
 		}
-
 		@Override
 		public boolean hasNext()
 		{
-			return runner!=null;
+			return runner != null;
 		}
 		@Override
 		public java.lang.Character next()
@@ -335,9 +349,9 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			{
 				throw new IllegalStateException();
 			}
-			if (runner==paragraph.next)
+			if (runner == paragraph.next)
 			{
-				paragraph=paragraph.next;
+				paragraph = paragraph.next;
 				canNext = false;
 				size--;
 				return;
@@ -351,6 +365,6 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			canNext = false;
 			size--;
 		}
-
 	}
+
 }
