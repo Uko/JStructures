@@ -144,30 +144,30 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			return;
 		}
 		Character cutBegin = null;
-		Iterator<java.lang.Character> comparator = insteadOf.iterator();
 		for (Character i = paragraph; i.next != null; i = i.next)
 		{
-			if (comparator.next() != i.next.value)
+			if (i.next.value == insteadOf.paragraph.value)
 			{
-				comparator = insteadOf.iterator();
-				cutBegin = null;
-			}
-			else
-			{
-				if (comparator.hasNext())
+				cutBegin = i;
+				boolean contains = true;
+				Character runner = i.next;
+				for (char comparator : insteadOf)
 				{
-					if (cutBegin == null)
+					if (runner == null || runner.value != comparator)
 					{
-						cutBegin = i;
+						contains = false;
+						break;
 					}
+					runner = runner.next;
 				}
-				else
+				if (contains)
 				{
-					endpoint.next = i.next.next;
+					endpoint.next = runner;
 					cutBegin.next = what.paragraph;
 					size += what.size - insteadOf.size;
 					return;
 				}
+				
 			}
 		}
 		throw new IllegalAccessException("No such substring");
@@ -214,21 +214,27 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 			throw new IllegalAccessException("Searched string is biger than an original one");
 		}
 		int index = 0;
-		Iterator<java.lang.Character> comparable1 = param.iterator();
-		for (char comparable2 : this)
+		for (Character i = paragraph; i.next != null; i = i.next)
 		{
-			index++;
-			if (comparable1.next() != comparable2)
+			if (i.value == param.paragraph.value)
 			{
-				comparable1 = param.iterator();
-			}
-			else
-			{
-				if (!comparable1.hasNext())
+				boolean contains = true;
+				Character runner = i;
+				for (char comparator : param)
+				{
+					if (runner == null || runner.value != comparator)
+					{
+						contains = false;
+						break;
+					}
+					runner = runner.next;
+				}
+				if (contains)
 				{
 					return index;
 				}
 			}
+			index++;
 		}
 		throw new IllegalAccessException("No such substring");
 	}
@@ -238,11 +244,11 @@ public class String implements StringInterface, Iterable<java.lang.Character>
 		int index = 0;
 		for (char comparable : this)
 		{
-			index++;
 			if (param == comparable)
 			{
 				return index;
 			}
+			index++;
 		}
 		throw new IllegalAccessException("No such character");
 	}
