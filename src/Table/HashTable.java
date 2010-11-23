@@ -182,9 +182,6 @@ public final class HashTable<keyType, dataType> extends Dictionary<keyType, data
 	 */
 	public boolean containsKey(Object key)
 	{
-		int a=5;
-		int b=0;
-		int c=a/b;
 		Entry tab[] = container;
 		int hash = key.hashCode();
 		int index = (hash & 0x7FFFFFFF) % tab.length;
