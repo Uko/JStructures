@@ -25,7 +25,6 @@ public class DijkstraAlgorithmTest
 	public void testSolve()
 	{
 		Graph instance = new Graph(6);
-		DijkstraAlgorithm helper = new DijkstraAlgorithm(instance, 0, 4);
 		instance.addConnection(7, 0, 1);
 		instance.addConnection(9, 0, 2);
 		instance.addConnection(14, 0, 5);
@@ -34,6 +33,11 @@ public class DijkstraAlgorithmTest
 		instance.addConnection(2, 2, 5);
 		instance.addConnection(6, 3, 4);
 		instance.addConnection(9, 4, 5);
-		assertEquals(20.0, helper.solve(), 0.0);
+		DijkstraAlgorithm helper = new DijkstraAlgorithm(instance, 0, 4);
+		for(int i:helper.getPath())
+		{
+			System.out.println(i);
+		}
+		assertEquals(20.0, helper.getLength(), 0.0);
 	}
 }
