@@ -27,6 +27,8 @@ public class RBTest {
 		for (int i=0; i<100; i++)
 		{
 			instance.insert(i, i*i);
+			instance.print();
+			System.out.println("———");
 		}
 		for (int i=0; i<100; i++)
 		{
