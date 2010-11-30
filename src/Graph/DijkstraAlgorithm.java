@@ -15,6 +15,12 @@ public class DijkstraAlgorithm
 {
 	private double length;
 	private int[] path;
+	/**
+	 * Upon the creation of the instance the algorithm is being run and a solution is calculated.
+	 * @param graph a graph to perform the algorithm on
+	 * @param from from what vertex
+	 * @param to to what vertex
+	 */
 	public DijkstraAlgorithm(Graph graph, int from, int to)
 	{
 		TreeMap<Double, Integer> map = new TreeMap<Double, Integer>();
