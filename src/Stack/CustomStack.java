@@ -6,28 +6,22 @@
 package Stack;
 
 /**
- * A custom stack
+ * A custom stack that has only 3 classical methods: push, pop & isEmpty
+ * @param <dataType> type of a stack content
  * @author uko
  */
-public class CustomStack
+public class CustomStack <dataType>
 {
-	private int size;
-	private Node head;
 	/**
-	 * Initializes stack with a 0 size, and null head.
+	 * A head of a stack
+	 */
+	protected Node<dataType> head;
+	/**
+	 * Initializes stack with an empty head.
 	 */
 	public CustomStack()
 	{
-		size = 0;
 		head = null;
-	}
-	/**
-	 * Shows size of stack.
-	 * @return amount of stack nodes.
-	 */
-	public int size()
-	{
-		return size;
 	}
 	/**
 	 * Check if the stack is empty.
@@ -35,42 +29,69 @@ public class CustomStack
 	 */
 	public boolean isEmpty()
 	{
-		return size == 0;
+		return head == null;
 	}
 	/**
 	 * Returns first element from the stack.
 	 * @return Object from the stack.
+	 * @throws Stack.CustomStack.CustomStackException throw an Exception with a massage "Stack Empty" when the shack is empty.
 	 */
-	public Object top()
+	public dataType pop() throws CustomStackException
 	{
 		if(isEmpty())
 		{
-			throw new RuntimeException("Stack Empty");
+			throw new CustomStackException("Stack Empty");
 		}
-		return head.data;
+		dataType temp = head.data;
+		head=head.next;
+		return temp;
 	}
 	/**
 	 * Adds an Object to the stack.
 	 * @param param Object to add.
 	 */
-	public void push(Object param)
+	public void push(dataType param)
 	{
 		Node temp = head;
 		head = new Node(param);
 		head.next = temp;
-		size++;
 	}
 	/**
-	 * Removes the first object from the stack.
+	 * A Checked exception that is used to tell about the problems of the stack
 	 */
-	public void pop()
+	static public class CustomStackException extends Exception
 	{
-		if(isEmpty())
+		/**
+		 * Uses superclass constructor
+		 */
+		public CustomStackException()
 		{
-			throw new RuntimeException("Stack Empty");
+			super();
 		}
-		head=head.next;
-		size--;
+		/**
+		 * Uses superclass constructor
+		 * @param param string to pass
+		 */
+		public CustomStackException(String param)
+		{
+			super(param);
+		}
+		/**
+		 * Uses superclass constructor
+		 * @param param Throwable to pass
+		 */
+		public CustomStackException(Throwable param)
+		{
+			super(param);
+		}
+		/**
+		 * Uses superclass constructor
+		 * @param param1 string to pass
+		 * @param param2 Throwable to pass
+		 */
+		public CustomStackException(String param1, Throwable param2)
+		{
+			super(param1, param2);
+		}
 	}
-
 }

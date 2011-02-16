@@ -9,12 +9,12 @@ package Stack;
  *
  * @author uko
  */
-public class Node
+public class Node<dataType>
 {
 	/**
 	 * The data in the stack node.
 	 */
-	public Object data;
+	public dataType data;
 	/**
 	 * Next node.
 	 */
@@ -31,7 +31,7 @@ public class Node
 	 * Constructs a node with the passed object and null pointer.
 	 * @param param Object to be stored in a node.
 	 */
-	public Node(Object param)
+	public Node(dataType param)
 	{
 		data = param;
 		next = null;

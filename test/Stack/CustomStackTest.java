@@ -4,6 +4,7 @@
  */
 package Stack;
 
+import Stack.CustomStack.CustomStackException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -14,23 +15,10 @@ import static org.junit.Assert.*;
 public class CustomStackTest
 {
 	/**
-	 * Test of size method, of class CustomStack.
-	 */
-	@Test
-	public void testSize()
-	{
-		CustomStack instance = new CustomStack();
-		for (int i=0; i<10; i++)
-		{
-			assertEquals(i, instance.size());
-			instance.push(5);
-		}
-	}
-	/**
 	 * Test of isEmpty method, of class CustomStack.
 	 */
 	@Test
-	public void testIsEmpty()
+	public void testIsEmpty() throws CustomStackException
 	{
 		CustomStack instance = new CustomStack();
 		assertEquals(true, instance.isEmpty());
@@ -42,41 +30,29 @@ public class CustomStackTest
 	/**
 	 * Test of top method exception throw, of class CustomStack.
 	 */
-	@Test(expected=RuntimeException.class)
-	public void testTop_exception()
+	@Test(expected = CustomStack.CustomStackException.class)
+	public void testTop_exception() throws CustomStackException
 	{
 		CustomStack instance = new CustomStack();
-		Object result = instance.top();
+		Object result = instance.pop();
 		fail("Exception has not occured");
 	}
 	/**
 	 * Test of top & push method, of class CustomStack.
 	 */
 	@Test
-	public void testTopAndPush()
+	public void testPopAndPush() throws CustomStackException
 	{
 		CustomStack instance = new CustomStack();
-		int i=0;
-		for (; i<10; i++)
+		int i = 0;
+		for (; i < 10; i++)
 		{
 			instance.push(i);
-			assertEquals(i, instance.top());
 		}
 		while (!instance.isEmpty())
 		{
 			i--;
-			assertEquals(i, instance.top());
-			instance.pop();
+			assertEquals(i, instance.pop());
 		}
-	}
-	/**
-	 * Test of pop method exception throw, of class CustomStack.
-	 */
-	@Test(expected=RuntimeException.class)
-	public void testPop_exception()
-	{
-		CustomStack instance = new CustomStack();
-		instance.pop();
-		fail("Exception has not occured.");
 	}
 }

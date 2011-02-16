@@ -4,6 +4,7 @@
  */
 package Tree;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 /**
@@ -14,21 +15,44 @@ import java.util.Enumeration;
  */
 public class RBliver<keyType extends Comparable<? super keyType>>
 {
-	private class Enumerator<keyType> implements Enumeration<keyType>
+	public class Enumerator<keyType extends Comparable<? super keyType>> implements Enumeration<keyType>
 	{
-		
+		private ArrayList<keyType> content;
+		private int index;
+		public Enumerator()
+		{
+			if (root != null)
+			{
+				content = new ArrayList<keyType>();
+				assemble(root);
+			}
+			index=0;
+		}
+		private void assemble(Node<?> n)
+		{
+			if (n.left != null)
+			{
+				assemble(n.left);
+			}
+			content.add((keyType) n.key);
+			if (n.right != null)
+			{
+				assemble(n.right);
+			}
+		}
 		@Override
 		public boolean hasMoreElements()
 		{
-			throw new UnsupportedOperationException("Not supported yet.");
+			return index <= content.size()-1;
 		}
 		@Override
 		public keyType nextElement()
 		{
-			throw new UnsupportedOperationException("Not supported yet.");
+			return content.get(index++);
 		}
 	}
-	private class Node<keyType extends Comparable<? super keyType>>
+
+	private static class Node<keyType extends Comparable<? super keyType>>
 	{
 		public keyType key;
 		public Node<keyType> left;
@@ -95,7 +119,7 @@ public class RBliver<keyType extends Comparable<? super keyType>>
 	}
 	public boolean exists(keyType key)
 	{
-		return lookupNode(key)!=null;
+		return lookupNode(key) != null;
 	}
 	private Node<keyType> lookupNode(keyType key)
 	{
@@ -358,9 +382,13 @@ public class RBliver<keyType extends Comparable<? super keyType>>
 
 		Node<keyType> child;
 		if (n.right == null)
-			child=n.left;
+		{
+			child = n.left;
+		}
 		else
-			child=n.right;
+		{
+			child = n.right;
+		}
 		if (nodeColor(n) == Color.BLACK)
 		{
 			n.color = nodeColor(child);
@@ -553,7 +581,7 @@ public class RBliver<keyType extends Comparable<? super keyType>>
 		}
 		else
 		{
-			System.out.println(/*"<" + */n.key +"!");
+			System.out.println(/*"<" + */n.key + "!");
 		}
 		if (n.left != null)
 		{
@@ -584,7 +612,7 @@ public class RBliver<keyType extends Comparable<? super keyType>>
 					&& verifyProperty2(n.right);
 		}
 	}
-	private boolean  verifyProperty3(Node<?> root)
+	private boolean verifyProperty3(Node<?> root)
 	{
 		try
 		{
@@ -621,13 +649,16 @@ public class RBliver<keyType extends Comparable<? super keyType>>
 		pathBlackCount = verifyProperty3Helper(n.right, blackCount, pathBlackCount);
 		return pathBlackCount;
 	}
-
 	/**
 	 * Verifies if tree is correct.
 	 * @return
 	 */
 	public boolean verifyProperties()
 	{
-		return verifyProperty1(root)&&verifyProperty2(root)&&verifyProperty3(root);
+		return verifyProperty1(root) && verifyProperty2(root) && verifyProperty3(root);
 	}
+	public Enumerator<keyType> enumerator()
+	{
+		return new Enumerator<keyType>();
 	}
+}
